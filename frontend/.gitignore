@@ -26,3 +26,7 @@
 
 # next.js generated types
 next-env.d.ts
+
+# skills
+/.agents/
+skills-lock.json
