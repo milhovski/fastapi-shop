@@ -2,6 +2,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     app_name: str = "Shop Backend"
+    app_version: str = "0.1"
     debug: bool = True
     database_url: str = "sqlite:///./shop.db"
     cors_origins: list[str] = ["http://localhost:3000"]
