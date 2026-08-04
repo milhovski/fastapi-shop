@@ -1,3 +1,4 @@
+#! Backend
 __pycache__/
 *.py[cod]
 *$py.class
@@ -57,8 +58,6 @@ lerna-debug.log*
 dev-dist
 
 node_modules
-.DS_Store
-dist
 dist-ssr
 coverage
 *.local
@@ -77,7 +76,6 @@ coverage
 *.sw?
 
 *.tsbuildinfo
-.vscode
 celerybeat-schedule
 celerybeat-schedule-wal
 
