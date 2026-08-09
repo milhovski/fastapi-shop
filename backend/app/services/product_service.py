@@ -16,6 +16,19 @@ class ProductService:
         products_response = [ProductResponse.model_validate(product) for product in products]
         return ProductListResponse(products=products_response, total=len(products_response))
 
+    def search_products(
+        self,
+        query: str | None = None,
+        category_id: int | None = None,
+        offset: int = 0,
+        limit: int = 24,
+    ) -> ProductListResponse:
+        products, total = self.product_repository.search(query, category_id, offset, limit)
+        return ProductListResponse(
+            products=[ProductResponse.model_validate(product) for product in products],
+            total=total,
+        )
+
     def get_product_by_id(self, product_id: int) -> ProductResponse:
         product = self.product_repository.get_by_id(product_id)
         if not product:

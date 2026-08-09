@@ -33,6 +33,7 @@ services:
         NEXT_PUBLIC_API_URL: https://shop.milhovski.com
     environment:
       NODE_ENV: production
+      API_URL: http://backend:8000
     expose:
       - "3000"
     depends_on:

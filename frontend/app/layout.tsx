@@ -5,8 +5,9 @@ import { cn } from "@/lib/utils";
 import { CartProvider } from "@/components/cart-provider";
 import { CartSheet } from "@/components/cart-sheet";
 import { SiteHeader } from "@/components/site-header";
+import { SearchProvider } from "@/components/search-provider";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,27 +20,30 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FORMA — вещи для жизни",
-  description: "Современные товары для дома и повседневной жизни.",
+  title: "Shop",
+  description: "A modern online store.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="ru"
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
+      lang="en"
+      className={cn(
+        "h-full",
+        "antialiased",
+        geistSans.variable,
+        geistMono.variable,
+        "font-sans",
+        inter.variable,
+      )}
     >
       <body className="flex min-h-full flex-col">
         <CartProvider>
-          <SiteHeader />
-          {children}
-          <CartSheet />
-          <footer className="mt-auto border-t">
-            <div className="mx-auto flex max-w-7xl flex-col justify-between gap-2 px-5 py-8 text-sm text-muted-foreground sm:flex-row lg:px-8">
-              <span>© 2026 FORMA</span>
-              <span>Простые вещи. Честные материалы.</span>
-            </div>
-          </footer>
+          <SearchProvider>
+            <SiteHeader />
+            {children}
+            <CartSheet />
+          </SearchProvider>
         </CartProvider>
       </body>
     </html>

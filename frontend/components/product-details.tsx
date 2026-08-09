@@ -12,20 +12,21 @@ import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
 import { apiFetch, formatPrice, type Product } from "@/lib/shop"
 
-export function ProductDetails({ id }: { id: string }) {
-  const [product, setProduct] = useState<Product | null>(null)
+export function ProductDetails({ id, initialProduct }: { id: string; initialProduct?: Product }) {
+  const [product, setProduct] = useState<Product | null>(initialProduct ?? null)
   const [error, setError] = useState(false)
   const { add } = useCart()
 
   useEffect(() => {
+    if (initialProduct) return
     apiFetch<Product>(`/api/products/${id}`).then(setProduct).catch(() => setError(true))
-  }, [id])
+  }, [id, initialProduct])
 
   if (error) return (
     <main className="mx-auto flex min-h-[70vh] max-w-7xl items-center px-5 lg:px-8">
       <Empty className="w-full border">
-        <EmptyHeader><EmptyTitle>Товар не найден</EmptyTitle><EmptyDescription>Возможно, он был удалён или ссылка устарела.</EmptyDescription></EmptyHeader>
-        <EmptyContent><Button variant="outline" render={<Link href="/" />} nativeButton={false}><IconArrowLeft data-icon="inline-start" />Вернуться в каталог</Button></EmptyContent>
+        <EmptyHeader><EmptyTitle>Product not found</EmptyTitle><EmptyDescription>It may have been removed or the link may be outdated.</EmptyDescription></EmptyHeader>
+        <EmptyContent><Button variant="outline" render={<Link href="/" />} nativeButton={false}><IconArrowLeft data-icon="inline-start" />Back to catalog</Button></EmptyContent>
       </Empty>
     </main>
   )
@@ -39,17 +40,17 @@ export function ProductDetails({ id }: { id: string }) {
 
   return (
     <main className="mx-auto max-w-7xl px-5 py-8 lg:px-8 lg:py-14">
-      <Button variant="ghost" render={<Link href="/" />} nativeButton={false} className="mb-6"><IconArrowLeft data-icon="inline-start" />Назад в каталог</Button>
+      <Button variant="ghost" render={<Link href="/" />} nativeButton={false} className="mb-6"><IconArrowLeft data-icon="inline-start" />Back to catalog</Button>
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         <ProductImage src={product.image_url} alt={product.name} className="rounded-2xl" />
         <div className="flex flex-col py-2 lg:py-8">
           <Badge variant="secondary" className="mb-5 w-fit">{product.category.name}</Badge>
           <h1 className="text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">{product.name}</h1>
-          <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{product.description || "Продуманная вещь для повседневной жизни."}</p>
+          <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{product.description || "A thoughtfully designed essential for everyday life."}</p>
           <Separator className="my-8" />
           <div className="mt-auto flex flex-col gap-5">
-            <div><p className="text-sm text-muted-foreground">Цена</p><p className="text-3xl font-semibold tracking-tight">{formatPrice(product.price)}</p></div>
-            <Button size="lg" onClick={() => add(product.id)}><IconShoppingBag data-icon="inline-start" />Добавить в корзину</Button>
+            <div><p className="text-sm text-muted-foreground">Price</p><p className="text-3xl font-semibold tracking-tight">{formatPrice(product.price)}</p></div>
+            <Button size="lg" onClick={() => add(product.id)}><IconShoppingBag data-icon="inline-start" />Add to cart</Button>
           </div>
         </div>
       </div>

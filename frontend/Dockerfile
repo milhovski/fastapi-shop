@@ -16,6 +16,7 @@ COPY . .
 
 ARG NEXT_PUBLIC_API_URL=http://localhost:8000
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL \
+    API_URL=http://backend:8000 \
     NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
@@ -23,6 +24,7 @@ RUN npm run build
 FROM node:22-bookworm-slim AS runner
 
 ENV NODE_ENV=production \
+    API_URL=http://backend:8000 \
     NEXT_TELEMETRY_DISABLED=1 \
     HOSTNAME=0.0.0.0 \
     PORT=3000

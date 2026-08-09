@@ -17,8 +17,8 @@ export function CartSheet() {
     <Sheet open={isOpen} onOpenChange={setOpen}>
       <SheetContent className="flex w-full flex-col sm:max-w-md">
         <SheetHeader>
-          <SheetTitle>Корзина</SheetTitle>
-          <SheetDescription>{details?.items_count ? `${details.items_count} товара в корзине` : "Ваши выбранные товары"}</SheetDescription>
+          <SheetTitle>Cart</SheetTitle>
+          <SheetDescription>{details?.items_count ? `${details.items_count} items in your cart` : "Your selected products"}</SheetDescription>
         </SheetHeader>
 
         <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-4">
@@ -34,16 +34,16 @@ export function CartSheet() {
                       <p className="line-clamp-2 font-medium leading-tight">{item.name}</p>
                       <p className="mt-1 text-sm text-muted-foreground">{formatPrice(item.price)}</p>
                     </div>
-                    <Button variant="ghost" size="icon-sm" aria-label={`Удалить ${item.name}`} onClick={() => remove(item.product_id)}>
+                    <Button variant="ghost" size="icon-sm" aria-label={`Remove ${item.name}`} onClick={() => remove(item.product_id)}>
                       <IconTrash />
                     </Button>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Button variant="outline" size="icon-sm" aria-label="Уменьшить количество" onClick={() => update(item.product_id, item.quantity - 1)}>
+                    <Button variant="outline" size="icon-sm" aria-label="Decrease quantity" onClick={() => update(item.product_id, item.quantity - 1)}>
                       <IconMinus />
                     </Button>
                     <span className="min-w-8 text-center text-sm font-medium">{item.quantity}</span>
-                    <Button variant="outline" size="icon-sm" aria-label="Увеличить количество" onClick={() => update(item.product_id, item.quantity + 1)}>
+                    <Button variant="outline" size="icon-sm" aria-label="Increase quantity" onClick={() => update(item.product_id, item.quantity + 1)}>
                       <IconPlus />
                     </Button>
                   </div>
@@ -54,11 +54,11 @@ export function CartSheet() {
             <Empty className="my-auto border-0">
               <EmptyHeader>
                 <EmptyMedia variant="icon"><IconShoppingBag /></EmptyMedia>
-                <EmptyTitle>Корзина пока пуста</EmptyTitle>
-                <EmptyDescription>Добавьте товары из каталога — они появятся здесь.</EmptyDescription>
+                <EmptyTitle>Your cart is empty</EmptyTitle>
+                <EmptyDescription>Add something from the catalog and it will appear here.</EmptyDescription>
               </EmptyHeader>
               <EmptyContent>
-                <Button variant="outline" onClick={() => setOpen(false)}>Вернуться к покупкам</Button>
+                <Button variant="outline" onClick={() => setOpen(false)}>Continue shopping</Button>
               </EmptyContent>
             </Empty>
           )}
@@ -69,10 +69,10 @@ export function CartSheet() {
             <Separator />
             <div className="flex items-end justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Итого</p>
+                <p className="text-sm text-muted-foreground">Total</p>
                 <p className="text-2xl font-semibold tracking-tight">{formatPrice(details.total)}</p>
               </div>
-              <p className="text-sm text-muted-foreground">Без оформления заказа</p>
+              <p className="text-sm text-muted-foreground">Checkout unavailable</p>
             </div>
           </SheetFooter>
         ) : null}
